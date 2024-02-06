@@ -4,19 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4da05e32-b437-4928-bdc9-392129184eb9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/button.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dialogue.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dropdown.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_objects.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/scene03.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/swamp_monster02.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scene01.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scene02.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scene03.py" afterDir="false" />
+    <list default="true" id="4da05e32-b437-4928-bdc9-392129184eb9" name="Changes" comment="dropdown, dialogue, buttons, and gameobject script in first draft">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bg1.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/bg1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dialogue.py" beforeDir="false" afterPath="$PROJECT_DIR$/dialogue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_objects.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scene03.py" beforeDir="false" afterPath="$PROJECT_DIR$/scene03.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,22 +34,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.dialogue.executor": "Run",
-    "Python.dropdown.executor": "Run",
-    "Python.game_objects.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.scene01.executor": "Run",
-    "Python.scene02.executor": "Run",
-    "Python.scene03.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/mattr/PycharmProjects/pythonProject/portfolio08_pygame/pygame_01"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.dialogue.executor&quot;: &quot;Run&quot;,
+    &quot;Python.dropdown.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game_objects.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scene01.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scene02.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scene03.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mattr/PycharmProjects/pythonProject/portfolio08_pygame/pygame_01&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\mattr\PycharmProjects\pythonProject\portfolio08_pygame\pygame_01" />
@@ -67,7 +59,7 @@
       <recent name="C:\Users\mattr\PycharmProjects\pythonProject\portfolio08_pygame\pygame_01" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.scene03">
     <configuration name="scene01" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="pygame_01" />
       <option name="ENV_FILES" value="" />
@@ -90,6 +82,33 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="scene03" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pygame_01" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scene03.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.scene03" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -107,7 +126,20 @@
       <option name="presentableId" value="Default" />
       <updated>1706058927013</updated>
     </task>
+    <task id="LOCAL-00001" summary="dropdown, dialogue, buttons, and gameobject script in first draft">
+      <option name="closed" value="true" />
+      <created>1706900209562</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1706900209562</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="dropdown, dialogue, buttons, and gameobject script in first draft" />
+    <option name="LAST_COMMIT_MESSAGE" value="dropdown, dialogue, buttons, and gameobject script in first draft" />
   </component>
   <component name="com.github.evgenys91.machinet.common.dslhistory.DslHistoryState">
     <option name="historyDtoById">

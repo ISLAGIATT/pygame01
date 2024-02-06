@@ -88,4 +88,3 @@ class Dialogue:
         else:
             # If dialogue_1 is finished and dialogue_2 hasn't started or finished, reset or advance logic
             self.dialogue_index_1 = 0  # Consider if you want an immediate reset or other handling
-

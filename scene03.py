@@ -23,6 +23,7 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 
+# Instantiate game objects
 book_button = TransparentButton(None, 150, 70, (150, 624), 0, None,
                                 (128, 128, 255, 0), (64, 64, 128, 0), (128, 128, 255, 0))
 book01 = Book01(dialogue=Book01.book_dialogue, options=None,
@@ -35,8 +36,6 @@ book01.options = book01_dropdown_actions = {
     "listen": book01.listen
 }
 book01.options = book01_dropdown_actions
-show_book = False
-
 
 def handle_click(mouse_pos, button):
     # Book
@@ -55,31 +54,36 @@ while run:
     # book button
     book_button.draw(screen)
     book_dropdown.draw(screen)
-
     if book01.is_visible:
-        book01.dialogue_instance.one_speaker_logic(book01.book_dialogue)
-    for event in pygame.event.get():
+        book01.show_current_dialogue(screen)
 
+    for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.mixer.music.stop()
             run = False
+
         elif event.type == pygame.MOUSEBUTTONDOWN:
             # Get the position of the mouse click
-            handle_click(mouse_pos, event.button)
             mouse_pos = pygame.mouse.get_pos()
+            handle_click(mouse_pos, event.button)
+
             if event.button == 3:  # Right-click
                 if book_button.is_over(mouse_pos):
                     book_dropdown.is_visible = not book_dropdown.is_visible
+
             elif event.button == 1:  # Left-click
-                if book_dropdown.is_visible:  # Ensure dropdown is visible before checking for option hover
+                if book_dropdown.is_visible:
+                    # Check if the click is over one of the dropdown options
                     hovered_option_index = book_dropdown.is_over_option(mouse_pos)
                     if hovered_option_index is not None:
+                        # Click is on a dropdown option
                         selected_option = book_dropdown.option_list[hovered_option_index]
-                        # Execute the action associated with the selected option
-                        if selected_option in book_dropdown.action_map:
-                            book_dropdown.action_map[selected_option]()
+                        # Execute the associated action
+                        book_dropdown.execute_action(selected_option)
+                        # Optionally hide the dropdown after an option is selected
+                        book_dropdown.is_visible = False
+                    else:
+                        # Click is outside the dropdown menu, so hide it
+                        book_dropdown.is_visible = False
 
     pygame.display.update()
-
-
-

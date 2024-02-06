@@ -3,9 +3,8 @@ from dialogue import Dialogue
 from dropdown import DropdownMenu
 
 class InteractiveObject:
-    def __init__(self, dialogue, options, position, size=(100, 30)):
+    def __init__(self, dialogue, position, size=(100, 30)):
         self.dialogue = dialogue
-        self.options = options
         self.position = position
         self.size = size
         self.is_visible = False
@@ -27,8 +26,8 @@ class Book01(InteractiveObject):
                       "the pages are stiff and sharp. they has seen very little use.",
                       "the pages of this closed book aren't sitting quite flush."]
 
-    def __init__(self, dialogue, options, position, book_button):
-        super().__init__(dialogue, options, position)
+    def __init__(self, dialogue, position, book_button):
+        super().__init__(dialogue, position)
         self.book_button = book_button
         self.dialogue_instance = Dialogue()
         self.is_book_open = False
@@ -81,6 +80,64 @@ class Book01(InteractiveObject):
         if not self.key_obtained:
             self.key_obtained = True
             self.is_book_open = False
+        print("open")
+
+    def close(self):
+        print("close")
+
+    def listen(self):
+        print("listen")
+
+    def push(self):
+        print("push")
+
+class Door01(InteractiveObject):
+    open_dialogue = ["the book opens with a creak. you find a newly cut brass key inside and pocket it."]
+    exam_dialogue = ["...",
+                      "a substantial looking door.",
+                      "you attempt to turn the knob and find it's locked.",
+                      "you push your shoulder into the door, but there is no give."]
+
+    def __init__(self, dialogue, position, button):
+        super().__init__(dialogue, position)
+        self.door_button = button
+        self.dialogue_instance = Dialogue()
+        self.door_unlocked = False
+        self.door_opened = False
+
+    def handle_click(self, mouse_pos, button):
+        # Toggle book dialogue visibility with left-click on the book button (outside dropdown visibility)
+        if button == 1 and self.door_button.is_over(mouse_pos):
+            if self.is_visible:
+                # Check if key has been obtained for dialogue cycling logic
+                if self.dialogue_index < len(self.exam_dialogue) - 1:
+                    self.dialogue_index += 1
+                    self.dialogue = [self.exam_dialogue[self.dialogue_index]]
+                    self.is_visible = not self.is_visible
+                else:
+                    self.dialogue_index = -1  # Loop back to the start
+            # if self.is_book_open:
+            #     self.advance_dialogue()
+            else:
+                self.is_visible = not self.is_visible
+
+    def show_current_dialogue(self, screen):
+        if self.is_visible and self.dialogue:
+            # Assuming draw_dialogue method of Dialogue instance is correctly implemented to handle text display
+            self.dialogue_instance.draw_dialogue(
+                text=self.dialogue[0],  # Here, self.dialogue is always a list with at least one item
+                color=(204, 0, 204),
+                pos=(200, 200))
+
+    def open(self):
+        # self.open_dialogue_index += 1
+        # if self.open_dialogue_index >= len(self.open_dialogues):
+        #     self.open_dialogue_index = 0
+        # self.dialogue = [self.open_dialogues[self.open_dialogue_index]]
+        # self.is_visible = True
+        # if not self.key_obtained:
+        #     self.key_obtained = True
+        #     self.is_book_open = False
         print("open")
 
     def close(self):

@@ -36,9 +36,10 @@ class Button:
         return False
 
 class TransparentButton():
-    def __init__(self, text, width, height, pos, elevation, image, color, shadow, hover):
+    def __init__(self, text, width, height, pos, elevation, action, image, color, shadow, hover):
         # self.image = pygame.transform.scale(image, (int(width), int(height)))
         # self.rect = self.image.get_rect()
+        self.action = action
         self.width = width
         self.height = height
         self.x = pos[0]
@@ -94,3 +95,8 @@ class TransparentButton():
 
         screen.blit(self.text_surf, self.text_rect)
         return action
+
+    def handle_click(self, mouse_pos, button=1):
+        # Call the action (function) passed to this button if it's provided
+        if self.action and self.is_over(mouse_pos):
+            self.action()

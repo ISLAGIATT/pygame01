@@ -6,7 +6,8 @@ GRAY = (200, 200, 200)
 LIGHT_GRAY = (170, 170, 170)
 
 class DropdownMenu:
-    def __init__(self, x, y, option_list, action_map, game_state_manager, w=100, h=30, color=(255, 255, 255), highlight_color=(200, 200, 200), font=None):
+    def __init__(self, x, y, option_list, action_map, game_state_manager, w=100, h=30, color=(255, 255, 255),
+                 highlight_color=(200, 200, 200), font=None, button=None):
         self.x = x
         self.y = y
         self.w = w
@@ -17,6 +18,7 @@ class DropdownMenu:
         self.action_map = action_map
         self.game_state_manager = game_state_manager
         self.is_visible = False
+        self.button = button
         if font is None:
             self.font = pygame.font.SysFont(None, 24)
         else:

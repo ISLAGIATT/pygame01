@@ -6,7 +6,7 @@ GRAY = (200, 200, 200)
 LIGHT_GRAY = (170, 170, 170)
 
 class DropdownMenu:
-    def __init__(self, x, y, option_list, action_map, w=100, h=30, color=(255, 255, 255), highlight_color=(200, 200, 200), font=None):
+    def __init__(self, x, y, option_list, action_map, game_state_manager, w=100, h=30, color=(255, 255, 255), highlight_color=(200, 200, 200), font=None):
         self.x = x
         self.y = y
         self.w = w
@@ -15,6 +15,7 @@ class DropdownMenu:
         self.highlight_color = highlight_color
         self.option_list = option_list
         self.action_map = action_map
+        self.game_state_manager = game_state_manager
         self.is_visible = False
         if font is None:
             self.font = pygame.font.SysFont(None, 24)
@@ -55,3 +56,15 @@ class DropdownMenu:
     def execute_action(self, option):
         if option in self.action_map:
             self.action_map[option]()
+
+    def toggle_visibility(self):
+        if not self.is_visible:
+            # Close any other open dropdowns before showing this one
+            self.game_state_manager.open_dropdown(self)
+        else:
+            # Directly call the method to hide this dropdown
+            self.game_state_manager.close_dropdown(self)
+
+    def close(self):
+        # Method to programmatically close this dropdown
+        self.is_visible = False

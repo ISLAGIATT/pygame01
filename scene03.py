@@ -3,7 +3,9 @@ from dialogue import Dialogue
 from dropdown import DropdownMenu
 from button import Button, TransparentButton
 from game_objects import Book01, Door01
+from game_state_manager import GameStateManager
 
+game_state_manager = GameStateManager()
 dialogue = Dialogue()
 pygame.init()
 
@@ -24,18 +26,19 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 
 # Instantiate game objects
+
 # Book
 book_button = TransparentButton(None, 150, 70, (150, 624), 0, None,
                                 (128, 128, 255, 0), (64, 64, 128, 0), (128, 128, 255, 0))
 book01 = Book01(dialogue=Book01.book_dialogue,
-                position=(150, 624), book_button=book_button)
-book_dropdown = DropdownMenu(180, 700, ['open', 'close', 'push', 'listen'], {'open': book01.open, 'close': book01.close, 'push': book01.push, 'listen': book01.listen})
+                position=(150, 624), book_button=book_button, game_state_manager=game_state_manager)
+book_dropdown = DropdownMenu(180, 700, ['open', 'close', 'push', 'listen'], {'open': book01.open, 'close': book01.close, 'push': book01.push, 'listen': book01.listen}, game_state_manager)
 
 # Door
-door_button = TransparentButton('DOOR', 150, 400, (793, 350), 0, None,
+door_button = TransparentButton(None, 150, 400, (793, 350), 0, None,
                                 (128, 128, 255, 0), (64, 64, 128, 0), (128, 128, 255, 0))
-door01 = Door01(dialogue=Door01.exam_dialogue, position=(793, 350), button=door_button)
-door_dropdown = DropdownMenu(680, 563, ['open', 'close', 'push', 'listen'], {'open': door01.open, 'close': door01.close, 'push': door01.push, 'listen': door01.listen})
+door01 = Door01(dialogue=Door01.exam_dialogue, position=(793, 350), button=door_button, game_state_manager=game_state_manager)
+door_dropdown = DropdownMenu(680, 563, ['open', 'close', 'push', 'listen'], {'open': door01.open, 'close': door01.close, 'push': door01.push, 'listen': door01.listen}, game_state_manager)
 
 
 def handle_click(mouse_pos, button):
@@ -44,7 +47,6 @@ def handle_click(mouse_pos, button):
         book01.handle_click(mouse_pos, button)
     elif door_button.is_over(mouse_pos):
         door01.handle_click(mouse_pos, button)
-
     print("Mouse clicked at position:", mouse_pos)
 
 
@@ -79,9 +81,9 @@ while run:
 
             if event.button == 3:  # Right-click
                 if book_button.is_over(mouse_pos):
-                    book_dropdown.is_visible = not book_dropdown.is_visible
+                    book_dropdown.toggle_visibility()
                 if door_button.is_over(mouse_pos):
-                    door_dropdown.is_visible = not door_dropdown.is_visible
+                    door_dropdown.toggle_visibility()
 
             elif event.button == 1:  # Left-click
                 if book_dropdown.is_visible:
@@ -110,5 +112,6 @@ while run:
                     else:
                         # Click is outside the dropdown menu, so hide it
                         door_dropdown.is_visible = False
+
 
     pygame.display.update()

@@ -1,4 +1,5 @@
 from dialogue import Dialogue
+from game_state_manager import GameStateManager
 
 class InteractiveObject:
     def __init__(self, dialogue, position, game_state_manager, size=(100, 30)):
@@ -39,7 +40,7 @@ class Book01(InteractiveObject):
         if button == 1 and self.book_button.is_over(mouse_pos):
             if self.is_visible:
                 # Check if key has been obtained for dialogue cycling logic
-                if self.book01_key_obtained:
+                if self.game_state_manager.book01_key_obtained:
                     # If the key is obtained, prevent accessing the last dialogue
                     # Cycle through to the third item only
                     if self.dialogue_index < 2:  # Adjust if your dialogues have different indices
@@ -59,6 +60,7 @@ class Book01(InteractiveObject):
                 self.advance_dialogue()
             else:
                 self.is_visible = not self.is_visible  # Just toggle visibility if the book isn't opened yet
+        print(f"key obtained: {self.game_state_manager.book01_key_obtained}")
 
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
@@ -92,8 +94,9 @@ class Door01(InteractiveObject):
     open_dialogue = ["you reach for the doorknob, and just above it you find a deadbolt with the keyhole facing you.",
                      "the deadbolt disengages with a satisfying yet somewhat off-putting 'THUNK'",
                      "the door is ajar. cold, damp air creeps in through the opening."]
-    exam_dialogue = ["...", "a substantial looking door.", "you push your shoulder into it, but there is no give.",
-                     "it looks like its been scratched at, but the marks aren't low enough to be from an animal."]
+    exam_dialogue = ["...", "a substantial looking door.",
+                     "it looks like its been scratched at, but the marks aren't low enough to be from an animal.",
+                     "you push your shoulder into it, but there is no give."]
 
     def __init__(self, dialogue, position, button, game_state_manager):
         super().__init__(dialogue, position, game_state_manager)
@@ -107,7 +110,14 @@ class Door01(InteractiveObject):
         # Toggle book dialogue visibility with left-click on the book button (outside dropdown visibility)
         if button == 1 and self.door_button.is_over(mouse_pos):
             if self.is_visible:
-                if self.dialogue_index < len(self.exam_dialogue) - 2:
+                if self.door_opened:
+                    if self.dialogue_index < len(self.exam_dialogue) - 2:
+                        self.dialogue_index += 1
+                        self.is_visible = not self.is_visible
+                    else:
+                        self.dialogue_index = 0
+                        self.is_visible = not self.is_visible
+                elif self.dialogue_index < len(self.exam_dialogue) - 2:
                     self.dialogue_index += 1
                     self.is_visible = not self.is_visible
                 else:
@@ -116,7 +126,7 @@ class Door01(InteractiveObject):
             else:
                 self.is_visible = not self.is_visible
             self.dialogue = [self.exam_dialogue[self.dialogue_index]]
-        print(self.door_opened)
+        print(f"door open: {self.door_opened}")
 
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:

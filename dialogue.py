@@ -42,13 +42,18 @@ class Dialogue:
             text_surface = font.render(line, True, color)
             self.screen.blit(text_surface, (pos[0], y))
             y += font.size(line)[1]  # Move to the next line
+        return bubble_rect
 
     def draw_dialogue(self, text, color, pos):
+        # Early return if text is empty or None
+        if not text:
+            return None  # Or an appropriate action
+
         font = pygame.font.Font(None, 36)
         max_characters_per_line = 25
-
-        if text:
-            self.draw_wrapped_text(text, max_characters_per_line, font, color, pos)
+        # Proceed with drawing the text, assuming it's valid
+        dialogue_rect = self.draw_wrapped_text(text, max_characters_per_line, font, color, pos)
+        return dialogue_rect
 
     def one_speaker_logic(self, dialogue_list):
         if self.dialogue_index_1 < len(dialogue_list):
@@ -87,4 +92,4 @@ class Dialogue:
                 self.dialogue_index_2 = 0  # Reset to start or handle according to your design
         else:
             # If dialogue_1 is finished and dialogue_2 hasn't started or finished, reset or advance logic
-            self.dialogue_index_1 = 0  # Consider if you want an immediate reset or other handling
+            self.dialogue_index_1 = 0

@@ -1,5 +1,4 @@
 from dialogue import Dialogue
-from game_state_manager import GameStateManager
 
 class InteractiveObject:
     def __init__(self, dialogue, position, game_state_manager, size=(100, 30)):
@@ -11,6 +10,7 @@ class InteractiveObject:
         self.dialogue_index = 0
         self.dialogue_instance = Dialogue()
         self.game_state_manager = game_state_manager
+        self.current_dialogue_rect = None
 
     def toggle_visibility(self):
         self.is_visible = not self.is_visible
@@ -36,7 +36,6 @@ class Book01(InteractiveObject):
         self.open_dialogue_index = -1  # Start before the first dialogue
 
     def handle_click(self, mouse_pos, button):
-        # Toggle book dialogue visibility with left-click on the book button (outside dropdown visibility)
         if button == 1 and self.book_button.is_over(mouse_pos):
             if self.is_visible:
                 # Check if key has been obtained for dialogue cycling logic
@@ -65,17 +64,16 @@ class Book01(InteractiveObject):
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
             # Assuming draw_dialogue method of Dialogue instance is correctly implemented to handle text display
-            self.dialogue_instance.draw_dialogue(
+            self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
                 text=self.dialogue[0],  # Here, self.dialogue is always a list with at least one item
                 color=(204, 0, 204),
                 pos=(200, 200))
 
     def open(self):
-        self.open_dialogue_index += 1
-        if self.open_dialogue_index >= len(self.open_dialogues):
-            self.open_dialogue_index = 0
-        self.dialogue = [self.open_dialogues[self.open_dialogue_index]]
+        self.dialogue = [self.open_dialogues[0]]
         self.is_visible = True
+        if self.game_state_manager.book01_key_obtained:
+            self.dialogue = [self.open_dialogues[1]]
         if not self.game_state_manager.book01_key_obtained:
             self.game_state_manager.pick_up_key01()
             self.is_book_open = False
@@ -107,6 +105,8 @@ class Door01(InteractiveObject):
         self.open_dialogue_index = 0
 
     def handle_click(self, mouse_pos, button):
+        if self.is_visible and self.current_dialogue_rect and self.current_dialogue_rect.collidepoint(mouse_pos):
+            self.advance_dialogue()
         # Toggle book dialogue visibility with left-click on the book button (outside dropdown visibility)
         if button == 1 and self.door_button.is_over(mouse_pos):
             if self.is_visible:

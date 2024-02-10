@@ -105,6 +105,7 @@ while run:
             run = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
+
             mouse_pos = pygame.mouse.get_pos()
             print(f"Mouse pos: {mouse_pos}")
             button = event.button

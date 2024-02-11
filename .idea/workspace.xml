@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4da05e32-b437-4928-bdc9-392129184eb9" name="Changes" comment="dialogue fix door indices">
+    <list default="true" id="4da05e32-b437-4928-bdc9-392129184eb9" name="Changes" comment="changed to pygame-ce&#10;trying to address clicking dialogue box to advance dialogue">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dialogue.py" beforeDir="false" afterPath="$PROJECT_DIR$/dialogue.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_objects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scene03.py" beforeDir="false" afterPath="$PROJECT_DIR$/scene03.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +172,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707456652776</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="changed to pygame-ce&#10;trying to address clicking dialogue box to advance dialogue">
+      <option name="closed" value="true" />
+      <created>1707588249830</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1707588249830</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -183,7 +189,8 @@
     <MESSAGE value="version before implementing mouse handler" />
     <MESSAGE value="mouse handler implemented" />
     <MESSAGE value="dialogue fix door indices" />
-    <option name="LAST_COMMIT_MESSAGE" value="dialogue fix door indices" />
+    <MESSAGE value="changed to pygame-ce&#10;trying to address clicking dialogue box to advance dialogue" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed to pygame-ce&#10;trying to address clicking dialogue box to advance dialogue" />
   </component>
   <component name="com.github.evgenys91.machinet.common.dslhistory.DslHistoryState">
     <option name="historyDtoById">

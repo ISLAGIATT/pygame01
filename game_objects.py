@@ -16,9 +16,12 @@ class InteractiveObject:
         self.is_visible = not self.is_visible
 
     def advance_dialogue(self):
-        self.dialogue_index += 1  # Correct use of self to reference instance attribute
+        print(f"Current dialogue index: {self.dialogue_index}")
+        self.dialogue_index += 1
         if self.dialogue_index >= len(self.dialogue):
-            self.dialogue_index = -1
+            self.dialogue_index = 0
+
+        # Ensure this new text is being used in the draw/update function
 
 class Book01(InteractiveObject):
     open_dialogue = ["the book opens with a creak. you find a newly cut brass key inside and pocket it."]
@@ -68,6 +71,8 @@ class Book01(InteractiveObject):
                 text=self.dialogue[0],  # Here, self.dialogue is always a list with at least one item
                 color=(204, 0, 204),
                 pos=(200, 200))
+            #print(self.current_dialogue_rect)
+
 
     def open(self):
         self.dialogue = [self.open_dialogues[0]]
@@ -77,7 +82,7 @@ class Book01(InteractiveObject):
         if not self.game_state_manager.book01_key_obtained:
             self.game_state_manager.pick_up_key01()
             self.is_book_open = False
-        print("open")
+
 
     def close(self):
         print("close")
@@ -131,7 +136,7 @@ class Door01(InteractiveObject):
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
             # Assuming draw_dialogue method of Dialogue instance is correctly implemented to handle text display
-            self.dialogue_instance.draw_dialogue(
+            self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
                 text=self.dialogue[0],  # Here, self.dialogue is always a list with at least one item
                 color=(204, 0, 204),
                 pos=(200, 200))

@@ -77,6 +77,7 @@ door_dropdown = DropdownMenu(680,
 # Mouse event handler
 mouse_event_handler = MouseEventHandler(
     clickable_objects=[book_button, door_button],  # Add other clickable objects here
+    interactive_objects=[book01, door01],
     dropdown_menus=[book_dropdown, door_dropdown]  # Add other dropdown menus here
 )
 

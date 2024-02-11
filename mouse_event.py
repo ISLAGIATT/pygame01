@@ -1,7 +1,9 @@
 class MouseEventHandler:
-    def __init__(self, clickable_objects, dropdown_menus):
+    def __init__(self, interactive_objects, clickable_objects, dropdown_menus):
         # Objects that respond directly to clicks (e.g., buttons)
         self.clickable_objects = clickable_objects
+        # Interactive Objects
+        self.interactive_objects = interactive_objects
         # Dropdown menus which have specific visibility toggling and option selection
         self.dropdown_menus = dropdown_menus
 
@@ -11,7 +13,30 @@ class MouseEventHandler:
             self.handle_right_click(mouse_pos)
         # Left-click: General click handling (objects and dropdown options)
         elif button == 1:
-            self.handle_left_click(mouse_pos)
+            if not self.handle_interactive_objects(mouse_pos):
+                self.handle_left_click(mouse_pos)
+
+    def handle_interactive_objects(self, mouse_pos):
+        for obj in self.interactive_objects:
+            if obj.is_visible and obj.current_dialogue_rect and obj.current_dialogue_rect.collidepoint(mouse_pos):
+                # Assuming all dialogues are lists, we check the length directly
+                if len(obj.dialogue) > 1:
+                    # Advance the dialogue index or reset and hide after the last entry
+                    if obj.dialogue_index < len(obj.dialogue) - 1:
+                        obj.dialogue_index += 1
+                    else:
+                        obj.dialogue_index = 0  # Reset index for future interactions
+                        obj.is_visible = False  # Hide after the last dialogue entry
+                else:
+                    # Single entry dialogues are hidden after being clicked
+                    obj.is_visible = False
+
+
+                # Ensure to update the dialogue display to reflect the new index or hide it
+                # This might involve redrawing the dialogue text or calling a method to update the game screen
+
+                return True  # Interaction handled
+        return False  # No dialogue interaction detected
 
     def handle_right_click(self, mouse_pos):
         for dropdown in self.dropdown_menus:
@@ -33,8 +58,6 @@ class MouseEventHandler:
 
                 # If clicked outside any visible dropdown, hide them
                 dropdown.is_visible = False
-
-        # Check for clicks on other clickable objects (e.g., buttons)
         for obj in self.clickable_objects:
             if obj.is_over(mouse_pos):
                 obj.handle_click(mouse_pos)

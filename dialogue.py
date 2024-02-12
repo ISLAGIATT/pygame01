@@ -6,7 +6,7 @@ class Dialogue:
         SCREEN_HEIGHT = 1024
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.BLACK = (0, 0, 0)
-
+        # Example dialogue
         self.dialogue_1 = ["Hello i am in a cabin",
                       "Still in a cabin",
                       "finally, I am in a cabin"]

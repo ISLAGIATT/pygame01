@@ -23,10 +23,10 @@ class MouseEventHandler:
                 if len(obj.dialogue) > 1:
                     # Advance the dialogue index or reset and hide after the last entry
                     if obj.dialogue_index < len(obj.dialogue) - 1:
-                        obj.dialogue_index += 1
+                        obj.advance_dialogue()
+                        obj.is_visible = False
                     else:
                         obj.dialogue_index = 0  # Reset index for future interactions
-                        obj.is_visible = False  # Hide after the last dialogue entry
                 else:
                     # Single entry dialogues are hidden after being clicked
                     obj.is_visible = False

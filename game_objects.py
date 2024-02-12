@@ -6,17 +6,16 @@ class InteractiveObject:
         self.position = position
         self.size = size
         self.is_visible = False
-        self.book01_key_obtained = False
         self.dialogue_index = 0
         self.dialogue_instance = Dialogue()
         self.game_state_manager = game_state_manager
-        self.current_dialogue_rect = None
+
 
     def toggle_visibility(self):
         self.is_visible = not self.is_visible
 
     def advance_dialogue(self):
-        print(f"Current dialogue index: {self.dialogue_index}")
+        print(f"Advance dialogue called. Current dialogue index: {self.dialogue_index}")
         self.dialogue_index += 1
         if self.dialogue_index >= len(self.dialogue):
             self.dialogue_index = 0
@@ -24,7 +23,6 @@ class InteractiveObject:
         # Ensure this new text is being used in the draw/update function
 
 class Book01(InteractiveObject):
-    open_dialogue = ["the book opens with a creak. you find a newly cut brass key inside and pocket it."]
     book_dialogue = ["...", "an old book.", "the pages are stiff and sharp. they has seen very little use.",
                      "the pages of this closed book aren't sitting quite flush."]
 
@@ -33,55 +31,57 @@ class Book01(InteractiveObject):
         self.book_button = book_button
         self.dialogue_instance = Dialogue()
         self.is_book_open = False
-
-        self.open_dialogues = ["The book opens with a creak. You find a newly cut brass key inside and pocket it.",
+        self.open_dialogue_index = 0
+        self.open_dialogue = ["The book opens with a creak. You find a newly cut brass key inside and pocket it.",
                                "The pages point skyward, waiting for a reader that will never come."]
-        self.open_dialogue_index = -1  # Start before the first dialogue
 
     def handle_click(self, mouse_pos, button):
         if button == 1 and self.book_button.is_over(mouse_pos):
             if self.is_visible:
-                # Check if key has been obtained for dialogue cycling logic
+                self.dialogue = self.book_dialogue
                 if self.game_state_manager.book01_key_obtained:
-                    # If the key is obtained, prevent accessing the last dialogue
-                    # Cycle through to the third item only
-                    if self.dialogue_index < 2:  # Adjust if your dialogues have different indices
+                    # If has key will no longer allude to key hidden in book
+                    if self.dialogue_index < 2:
                         self.dialogue_index += 1
+                        self.is_visible = False
                     else:
-                        self.dialogue_index = 0  # Loop back after the third item
+                        self.dialogue_index = 0
+                        self.toggle_visibility()
                 else:
                     # Key not obtained, cycle through all but the last dialogue
                     if self.dialogue_index < len(self.book_dialogue) - 1:
-                        self.dialogue_index += 1
+                        self.advance_dialogue()
+                        self.toggle_visibility()
+                        print('3')
+                        print(f"no key normal advancement {self.dialogue_index}")
                     else:
                         self.dialogue_index = 0  # Loop back to the start
-
-                # Update the dialogue based on the new index
-                self.dialogue = [self.book_dialogue[self.dialogue_index]]
-            if self.is_book_open:
-                self.advance_dialogue()
+                        self.toggle_visibility()
             else:
                 self.is_visible = not self.is_visible  # Just toggle visibility if the book isn't opened yet
         print(f"key obtained: {self.game_state_manager.book01_key_obtained}")
 
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
-            # Assuming draw_dialogue method of Dialogue instance is correctly implemented to handle text display
-            self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
-                text=self.dialogue[0],  # Here, self.dialogue is always a list with at least one item
-                color=(204, 0, 204),
-                pos=(200, 200))
-            #print(self.current_dialogue_rect)
-
+            # Ensure dialogue_index is within the correct range
+            if 0 <= self.dialogue_index < len(self.dialogue):
+                current_text = self.dialogue[self.dialogue_index]  # Access the current dialogue
+                self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
+                    text=current_text,
+                    color=(204, 0, 204),
+                    pos=(200, 200))
 
     def open(self):
-        self.dialogue = [self.open_dialogues[0]]
         self.is_visible = True
+
         if self.game_state_manager.book01_key_obtained:
-            self.dialogue = [self.open_dialogues[1]]
-        if not self.game_state_manager.book01_key_obtained:
+            self.dialogue = [self.open_dialogue[1]]
+            self.dialogue_index = 0
+        else:
+            self.dialogue = [self.open_dialogue[0]]
+            self.dialogue_index = 0
             self.game_state_manager.pick_up_key01()
-            self.is_book_open = False
+            self.is_book_open = True
 
 
     def close(self):

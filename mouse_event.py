@@ -21,6 +21,7 @@ class MouseEventHandler:
             if obj.is_visible and obj.current_dialogue_rect and obj.current_dialogue_rect.collidepoint(mouse_pos):
                 # Assuming all dialogues are lists, we check the length directly
                 if len(obj.dialogue) > 1:
+                    print(f'object: {obj}, length of dialogue list: {len(obj.dialogue)}, index: {obj.dialogue_index}')
                     # Advance the dialogue index or reset and hide after the last entry
                     if obj.dialogue_index < len(obj.dialogue) - 1:
                         obj.advance_dialogue()

@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4da05e32-b437-4928-bdc9-392129184eb9" name="Changes" comment="still wrestling with mouse handling dialogue lmb">
+    <list default="true" id="4da05e32-b437-4928-bdc9-392129184eb9" name="Changes" comment="dialogue adv and mouse handling fixed I THINK">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/button.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dialogue.py" beforeDir="false" afterPath="$PROJECT_DIR$/dialogue.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_objects.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mouse_event.py" beforeDir="false" afterPath="$PROJECT_DIR$/mouse_event.py" afterDir="false" />
     </list>
@@ -191,7 +189,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707628303833</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="dialogue adv and mouse handling fixed I THINK">
+      <option name="closed" value="true" />
+      <created>1707769832617</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1707769832617</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -202,7 +208,8 @@
     <MESSAGE value="dialogue fix door indices" />
     <MESSAGE value="changed to pygame-ce&#10;trying to address clicking dialogue box to advance dialogue" />
     <MESSAGE value="still wrestling with mouse handling dialogue lmb" />
-    <option name="LAST_COMMIT_MESSAGE" value="still wrestling with mouse handling dialogue lmb" />
+    <MESSAGE value="dialogue adv and mouse handling fixed I THINK" />
+    <option name="LAST_COMMIT_MESSAGE" value="dialogue adv and mouse handling fixed I THINK" />
   </component>
   <component name="com.github.evgenys91.machinet.common.dslhistory.DslHistoryState">
     <option name="historyDtoById">

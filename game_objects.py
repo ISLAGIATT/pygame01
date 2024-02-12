@@ -10,17 +10,13 @@ class InteractiveObject:
         self.dialogue_instance = Dialogue()
         self.game_state_manager = game_state_manager
 
-
     def toggle_visibility(self):
         self.is_visible = not self.is_visible
 
     def advance_dialogue(self):
-        print(f"Advance dialogue called. Current dialogue index: {self.dialogue_index}")
         self.dialogue_index += 1
         if self.dialogue_index >= len(self.dialogue):
             self.dialogue_index = 0
-
-        # Ensure this new text is being used in the draw/update function
 
 class Book01(InteractiveObject):
     book_dialogue = ["...", "an old book.", "the pages are stiff and sharp. they has seen very little use.",
@@ -52,8 +48,6 @@ class Book01(InteractiveObject):
                     if self.dialogue_index < len(self.book_dialogue) - 1:
                         self.advance_dialogue()
                         self.toggle_visibility()
-                        print('3')
-                        print(f"no key normal advancement {self.dialogue_index}")
                     else:
                         self.dialogue_index = 0  # Loop back to the start
                         self.toggle_visibility()
@@ -73,7 +67,6 @@ class Book01(InteractiveObject):
 
     def open(self):
         self.is_visible = True
-
         if self.game_state_manager.book01_key_obtained:
             self.dialogue = [self.open_dialogue[1]]
             self.dialogue_index = 0
@@ -110,49 +103,50 @@ class Door01(InteractiveObject):
         self.open_dialogue_index = 0
 
     def handle_click(self, mouse_pos, button):
-        if self.is_visible and self.current_dialogue_rect and self.current_dialogue_rect.collidepoint(mouse_pos):
-            self.advance_dialogue()
-        # Toggle book dialogue visibility with left-click on the book button (outside dropdown visibility)
         if button == 1 and self.door_button.is_over(mouse_pos):
             if self.is_visible:
+                self.dialogue = self.exam_dialogue
                 if self.door_opened:
                     if self.dialogue_index < len(self.exam_dialogue) - 2:
-                        self.dialogue_index += 1
-                        self.is_visible = not self.is_visible
+                        self.advance_dialogue()
+                        self.toggle_visibility()
                     else:
                         self.dialogue_index = 0
-                        self.is_visible = not self.is_visible
-                elif self.dialogue_index < len(self.exam_dialogue) - 2:
-                    self.dialogue_index += 1
-                    self.is_visible = not self.is_visible
-                else:
-                    self.dialogue_index = -1  # Loop back to the start
-                    self.is_visible = not self.is_visible
+                        self.toggle_visibility()
+                elif not self.door_opened:
+                    if self.dialogue_index < len(self.exam_dialogue) - 1:
+                        self.advance_dialogue()
+                        self.toggle_visibility()
+                    else:
+                        self.dialogue_index = 0
+                        self.toggle_visibility()
             else:
-                self.is_visible = not self.is_visible
-            self.dialogue = [self.exam_dialogue[self.dialogue_index]]
-        print(f"door open: {self.door_opened}")
+                self.toggle_visibility()
+        print(f"door open: {self.door_opened}\nkey obtained  {self.game_state_manager.book01_key_obtained}")
 
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
-            # Assuming draw_dialogue method of Dialogue instance is correctly implemented to handle text display
-            self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
-                text=self.dialogue[0],  # Here, self.dialogue is always a list with at least one item
-                color=(204, 0, 204),
-                pos=(200, 200))
+            # Ensure dialogue_index is within the correct range
+            if 0 <= self.dialogue_index < len(self.dialogue):
+                current_text = self.dialogue[self.dialogue_index]  # Access the current dialogue
+                self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
+                    text=current_text,
+                    color=(204, 0, 204),
+                    pos=(200, 200))
 
     def open(self):
+        self.is_visible = True
         if self.game_state_manager.book01_key_obtained and self.door_opened:
             self.dialogue = [self.open_dialogue[2]]
-            self.is_visible = True
+            self.dialogue_index = 0
 
         elif self.game_state_manager.book01_key_obtained and not self.door_opened:
             self.dialogue = [self.open_dialogue[1]]
-            self.is_visible = True
+            self.dialogue_index = 0
             self.door_opened = True
         else:
             self.dialogue = [self.open_dialogue[0]]
-            self.is_visible = True
+            self.dialogue_index = 0
 
 
     def close(self):

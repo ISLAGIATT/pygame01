@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4da05e32-b437-4928-bdc9-392129184eb9" name="Changes" comment="dialogue adv and mouse handling fixed I THINK">
+    <list default="true" id="4da05e32-b437-4928-bdc9-392129184eb9" name="Changes" comment="2/12 commit everything working about to add more dropdown commands">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_objects.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/scene03.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/scene03.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mouse_event.py" beforeDir="false" afterPath="$PROJECT_DIR$/mouse_event.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scene03.py" beforeDir="false" afterPath="$PROJECT_DIR$/scene03.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +199,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707769832617</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="2/12 commit everything working about to add more dropdown commands">
+      <option name="closed" value="true" />
+      <created>1707778196671</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1707778196671</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -209,7 +219,8 @@
     <MESSAGE value="changed to pygame-ce&#10;trying to address clicking dialogue box to advance dialogue" />
     <MESSAGE value="still wrestling with mouse handling dialogue lmb" />
     <MESSAGE value="dialogue adv and mouse handling fixed I THINK" />
-    <option name="LAST_COMMIT_MESSAGE" value="dialogue adv and mouse handling fixed I THINK" />
+    <MESSAGE value="2/12 commit everything working about to add more dropdown commands" />
+    <option name="LAST_COMMIT_MESSAGE" value="2/12 commit everything working about to add more dropdown commands" />
   </component>
   <component name="com.github.evgenys91.machinet.common.dslhistory.DslHistoryState">
     <option name="historyDtoById">

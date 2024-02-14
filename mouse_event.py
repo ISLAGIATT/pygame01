@@ -28,6 +28,7 @@ class MouseEventHandler:
                         obj.is_visible = False
                     else:
                         obj.dialogue_index = 0  # Reset index for future interactions
+                        obj.is_visible = False
                 else:
                     # Single entry dialogues are hidden after being clicked
                     obj.is_visible = False

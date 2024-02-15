@@ -27,6 +27,10 @@ class InteractiveObject:
 class Book01(InteractiveObject):
     book_dialogue = ["a brand-new book.", "the pages are stiff and sharp. they has seen very little use.",
                      "the pages of this closed book aren't sitting quite flush."]
+    listen_dialogue = ["you run your thumb across the unworn pages and it sounds like a deck of cards."]
+    touch_dialogue = ["glossed in a cheap finish. the kind of book that is printed so someone can decorate a "
+                      "room with it rather than read."]
+    consider_dialogue = ["conspicuously placed. or maybe someone left it here in haste?"]
 
     def __init__(self, dialogue, position, book_button, game_state_manager):
         super().__init__(dialogue, position, game_state_manager)
@@ -83,14 +87,20 @@ class Book01(InteractiveObject):
             self.is_book_open = True
 
 
-    def close(self):
-        print("close")
+    def touch(self): # touch
+        self.is_visible = True
+        self.dialogue = [self.touch_dialogue[0]]
+        self.dialogue_index = 0
 
     def listen(self):
-        print("listen")
+        self.is_visible = True
+        self.dialogue = [self.listen_dialogue[0]]
+        self.dialogue_index = 0
 
-    def push(self):
-        print("push")
+    def consider(self): # consider
+        self.is_visible = True
+        self.dialogue = [self.consider_dialogue[0]]
+        self.dialogue_index = 0
 
 class Door01(InteractiveObject):
     open_dialogue = ["you reach for the doorknob, and just above it you find a deadbolt with the keyhole facing you.",
@@ -99,11 +109,18 @@ class Door01(InteractiveObject):
     exam_dialogue = ["a substantial looking door.",
                      "it looks like its been scratched at, but the marks aren't low enough to be from an animal.",
                      "you push your shoulder into it, but there is no give."]
+    touch_dialogue = ["your fingers explore the deep crevices of the scratch marks. "
+                      "they are of different widths and depths"]
+    listen_dialogue = ["you rap lightly on the door. it sounds multitudes more dense than a typical interior door. "
+                       "this is meant to keep something out... or in.",
+                       "do you hear distant voices, or are you just disoriented?"]
+    consider_dialogue = ["finding yourself in a room that locks from the outside bodes poorly."]
 
     def __init__(self, dialogue, position, button, game_state_manager):
         super().__init__(dialogue, position, game_state_manager)
         self.door_button = button
         self.dialogue_instance = Dialogue()
+        self.game_state_manager = game_state_manager
         self.door_unlocked = False
         self.door_opened = False
         self.open_dialogue_index = 0
@@ -140,6 +157,7 @@ class Door01(InteractiveObject):
                     color=self.RED,
                     pos=(500, 250))
 
+
     def open(self):
         self.is_visible = True
         if self.game_state_manager.book01_key_obtained and self.door_opened:
@@ -147,6 +165,7 @@ class Door01(InteractiveObject):
             self.dialogue_index = 0
 
         elif self.game_state_manager.book01_key_obtained and not self.door_opened:
+            self.game_state_manager.door01_unlocked = True
             self.dialogue = [self.open_dialogue[1]]
             self.dialogue_index = 0
             self.door_opened = True
@@ -155,14 +174,21 @@ class Door01(InteractiveObject):
             self.dialogue_index = 0
 
 
-    def close(self):
-        print("close")
+    def touch(self):
+        self.is_visible = True
+        self.dialogue = [self.touch_dialogue[0]]
+        self.dialogue_index = 0
 
     def listen(self):
-        print("listen")
+        self.is_visible = True
+        if self.game_state_manager.door01_unlocked:
+            self.dialogue = [self.listen_dialogue[1]]
+        else:
+            self.dialogue = [self.listen_dialogue[0]]
 
-    def push(self):
-        print("push")
+    def consider(self):
+        self.is_visible = True
+        self.dialogue = [self.consider_dialogue[0]]
 
 class WindowDude01(InteractiveObject):
     window_dude_dialogue = ["...", "you can barely make out a figure outside", "...you think."]
@@ -193,7 +219,9 @@ class WindowDude01(InteractiveObject):
                     pos=(450, 319))
 
 class LibraryBooks01(InteractiveObject):
-    library_books_dialogue = ["many books line the walls", 'unlike most book collections, most of these seem recently purchased.', 'not a speck of dust to be found.']
+    library_books_dialogue = ["many books line the walls", 'unlike most book collections,'
+                                                           ' most of these seem recently purchased.',
+                              'not a speck of dust to be found.']
 
     def __init__(self, dialogue, position, library_books_button, game_state_manager):
         super().__init__(dialogue, position, game_state_manager)

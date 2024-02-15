@@ -18,7 +18,9 @@ pygame.mixer.music.load("Lofi Beat 3.wav")
 pygame.mixer.music.set_volume(0.50)
 pygame.mixer.music.play(loops=-1)
 
-background_image = pygame.image.load("images/scene03.png")
+bg_all_closed = pygame.image.load("images/scene03.png")
+bg_book_open = pygame.image.load("images/scene03_book_open.png")
+bg_all_open = pygame.image.load("images/scene03_book_and_door_open.png")
 
 # Define colors
 WHITE = (255, 255, 255)
@@ -45,9 +47,9 @@ book01 = Book01(dialogue=Book01.book_dialogue,
                 game_state_manager=game_state_manager)
 book_dropdown = DropdownMenu(180,
                              700,
-                             ['open', 'close', 'push', 'listen'],
-                             {'open': book01.open, 'close': book01.close, 'push': book01.push,
-                              'listen': book01.listen},
+                             ['open', 'touch', 'listen', 'consider'],
+                             {'open': book01.open, 'touch': book01.touch, 'listen': book01.listen,
+                              'consider': book01.consider},
                              game_state_manager,
                              button=book_button)
 
@@ -68,9 +70,9 @@ door01 = Door01(dialogue=Door01.exam_dialogue,
                 game_state_manager=game_state_manager)
 door_dropdown = DropdownMenu(680,
                              563,
-                             ['open', 'close', 'push', 'listen'],
-                             {'open': door01.open, 'close': door01.close, 'push': door01.push,
-                              'listen': door01.listen},
+                             ['open', 'touch', 'listen', 'consider'],
+                             {'open': door01.open, 'touch': door01.touch, 'listen': door01.listen,
+                              'consider': door01.consider},
                              game_state_manager,
                              button=door_button)
 
@@ -138,7 +140,12 @@ run = True
 
 while run:
     screen.fill((0, 0, 0))
-    screen.blit(background_image, (0, 0))
+    if game_state_manager.door01_unlocked:
+        screen.blit(bg_all_open, (0,0))
+    elif game_state_manager.book01_key_obtained:
+        screen.blit(bg_book_open, (0, 0))
+    else:
+        screen.blit(bg_all_closed, (0, 0))
     mouse_pos = pygame.mouse.get_pos()
 
     # book button

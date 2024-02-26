@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4da05e32-b437-4928-bdc9-392129184eb9" name="Changes" comment="2/13 commit. fleshing out minor objects">
-      <change afterPath="$PROJECT_DIR$/images/scene03_book_and_door_open.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/scene03_book_open.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_objects.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game_state_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_state_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scene03.py" beforeDir="false" afterPath="$PROJECT_DIR$/scene03.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

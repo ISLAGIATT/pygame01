@@ -1,3 +1,4 @@
+import pygame.time
 from dialogue import Dialogue
 
 class InteractiveObject:
@@ -15,6 +16,7 @@ class InteractiveObject:
         self.dialogue_index = 0
         self.dialogue_instance = Dialogue()
         self.game_state_manager = game_state_manager
+        self.last_show_time = pygame.time.get_ticks()
 
     def toggle_visibility(self):
         self.is_visible = not self.is_visible
@@ -23,6 +25,7 @@ class InteractiveObject:
         self.dialogue_index += 1
         if self.dialogue_index >= len(self.dialogue):
             self.dialogue_index = 0
+
 
 class Book01(InteractiveObject):
     book_dialogue = ["a brand-new book.", "the pages are stiff and sharp. they has seen very little use.",
@@ -38,8 +41,9 @@ class Book01(InteractiveObject):
         self.dialogue_instance = Dialogue()
         self.is_book_open = False
         self.open_dialogue_index = 0
+        self.last_show_time = 0
         self.open_dialogue = ["The book opens with a crackle. You find a newly cut brass key inside and pocket it.",
-                               "The pages point skyward, waiting for a reader that will never come."]
+                              "The pages point skyward, waiting for a reader that will never come."]
 
     def handle_click(self, mouse_pos, button):
         if button == 1 and self.book_button.is_over(mouse_pos):
@@ -47,7 +51,7 @@ class Book01(InteractiveObject):
                 self.dialogue = self.book_dialogue
                 if self.game_state_manager.book01_key_obtained:
                     # If has key will no longer allude to key hidden in book
-                    if self.dialogue_index < 2:
+                    if self.dialogue_index < len(self.book_dialogue) - 2:
                         self.dialogue_index += 1
                         self.is_visible = False
                     else:
@@ -64,16 +68,19 @@ class Book01(InteractiveObject):
             else:
                 self.is_visible = not self.is_visible  # Just toggle visibility if the book isn't opened yet
         print(f"key obtained: {self.game_state_manager.book01_key_obtained}")
+        self.last_show_time = pygame.time.get_ticks()
 
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
-            # Ensure dialogue_index is within the correct range
-            if 0 <= self.dialogue_index < len(self.dialogue):
-                current_text = self.dialogue[self.dialogue_index]  # Access the current dialogue
-                self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
-                    text=current_text,
-                    color=self.MAGENTA,
-                    pos=(200, 200))
+            if pygame.time.get_ticks() - self.last_show_time > 3500:
+                self.is_visible = False
+                self.last_show_time = 0
+            else:
+                if self.is_visible and self.dialogue:
+                    if 0 <= self.dialogue_index < len(self.dialogue):
+                        current_text = self.dialogue[self.dialogue_index]
+                        self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
+                            text=current_text, color=self.MAGENTA, pos=(200, 200))
 
     def open(self):
         self.is_visible = True
@@ -86,8 +93,7 @@ class Book01(InteractiveObject):
             self.game_state_manager.pick_up_key01()
             self.is_book_open = True
 
-
-    def touch(self): # touch
+    def touch(self):  # touch
         self.is_visible = True
         self.dialogue = [self.touch_dialogue[0]]
         self.dialogue_index = 0
@@ -97,10 +103,11 @@ class Book01(InteractiveObject):
         self.dialogue = [self.listen_dialogue[0]]
         self.dialogue_index = 0
 
-    def consider(self): # consider
+    def consider(self):  # consider
         self.is_visible = True
         self.dialogue = [self.consider_dialogue[0]]
         self.dialogue_index = 0
+
 
 class Door01(InteractiveObject):
     open_dialogue = ["you reach for the doorknob, and just above it you find a deadbolt with the keyhole facing you.",
@@ -124,6 +131,7 @@ class Door01(InteractiveObject):
         self.door_unlocked = False
         self.door_opened = False
         self.open_dialogue_index = 0
+        self.last_show_time = 0
 
     def handle_click(self, mouse_pos, button):
         if button == 1 and self.door_button.is_over(mouse_pos):
@@ -145,18 +153,22 @@ class Door01(InteractiveObject):
                         self.toggle_visibility()
             else:
                 self.toggle_visibility()
+        self.last_show_time = pygame.time.get_ticks()
         print(f"door open: {self.door_opened}\nkey obtained  {self.game_state_manager.book01_key_obtained}")
 
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
-            # Ensure dialogue_index is within the correct range
-            if 0 <= self.dialogue_index < len(self.dialogue):
-                current_text = self.dialogue[self.dialogue_index]  # Access the current dialogue
-                self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
-                    text=current_text,
-                    color=self.RED,
-                    pos=(500, 250))
-
+            if pygame.time.get_ticks() - self.last_show_time > 3500:
+                self.is_visible = False
+                self.last_show_time = 0
+            else:
+                if self.is_visible and self.dialogue:
+                    if 0 <= self.dialogue_index < len(self.dialogue):
+                        current_text = self.dialogue[self.dialogue_index]
+                        self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
+                            text=current_text,
+                            color=self.RED,
+                            pos=(500, 250))
 
     def open(self):
         self.is_visible = True
@@ -173,7 +185,6 @@ class Door01(InteractiveObject):
             self.dialogue = [self.open_dialogue[0]]
             self.dialogue_index = 0
 
-
     def touch(self):
         self.is_visible = True
         self.dialogue = [self.touch_dialogue[0]]
@@ -189,6 +200,8 @@ class Door01(InteractiveObject):
     def consider(self):
         self.is_visible = True
         self.dialogue = [self.consider_dialogue[0]]
+        self.dialogue_index = 0
+
 
 class WindowDude01(InteractiveObject):
     window_dude_dialogue = ["...", "you can barely make out a figure outside", "...you think."]
@@ -198,6 +211,7 @@ class WindowDude01(InteractiveObject):
         self.dialogue_instance = Dialogue()
         self.window_dude_button = window_dude_button
         self.current_dialogue_rect = None
+        self.last_show_time = 0
 
     def handle_click(self, mouse_pos, button):
         if button == 1 and self.window_dude_button.is_over(mouse_pos):
@@ -207,16 +221,22 @@ class WindowDude01(InteractiveObject):
                 self.toggle_visibility()
             else:
                 self.toggle_visibility()
+        self.last_show_time = pygame.time.get_ticks()
 
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
-            # Ensure dialogue_index is within the correct range
-            if 0 <= self.dialogue_index < len(self.dialogue):
-                current_text = self.dialogue[self.dialogue_index]  # Access the current dialogue
-                self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
-                    text=current_text,
-                    color=self.TANGERINE,
-                    pos=(450, 319))
+            if pygame.time.get_ticks() - self.last_show_time > 3500:
+                self.is_visible = False
+                self.last_show_time = 0
+            else:
+                if self.is_visible and self.dialogue:
+                    if 0 <= self.dialogue_index < len(self.dialogue):
+                        current_text = self.dialogue[self.dialogue_index]
+                        self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
+                            text=current_text,
+                            color=self.TANGERINE,
+                            pos=(450, 319))
+
 
 class LibraryBooks01(InteractiveObject):
     library_books_dialogue = ["many books line the walls", 'unlike most book collections,'
@@ -228,6 +248,7 @@ class LibraryBooks01(InteractiveObject):
         self.dialogue_instance = Dialogue()
         self.library_books_button = library_books_button
         self.current_dialogue_rect = None
+        self.last_show_time = 0
 
     def handle_click(self, mouse_pos, button):
         if button == 1 and self.library_books_button.is_over(mouse_pos):
@@ -237,16 +258,22 @@ class LibraryBooks01(InteractiveObject):
                 self.toggle_visibility()
             else:
                 self.toggle_visibility()
+        self.last_show_time = pygame.time.get_ticks()
 
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
-            # Ensure dialogue_index is within the correct range
-            if 0 <= self.dialogue_index < len(self.dialogue):
-                current_text = self.dialogue[self.dialogue_index]  # Access the current dialogue
-                self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
-                    text=current_text,
-                    color=self.MUSTARD,
-                    pos=(259, 412))
+            if pygame.time.get_ticks() - self.last_show_time > 3500:
+                self.is_visible = False
+                self.last_show_time = 0
+            else:
+                if self.is_visible and self.dialogue:
+                    if 0 <= self.dialogue_index < len(self.dialogue):
+                        current_text = self.dialogue[self.dialogue_index]
+                        self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
+                            text=current_text,
+                            color=self.MUSTARD,
+                            pos=(259, 412))
+
 
 class LightSwitch01(InteractiveObject):
     light_switch_dialogue = ["you flick the lightswitch on. no response",
@@ -259,6 +286,7 @@ class LightSwitch01(InteractiveObject):
         self.dialogue_instance = Dialogue()
         self.light_switch_button = light_switch_button
         self.current_dialogue_rect = None
+        self.last_show_time = 0
 
     def handle_click(self, mouse_pos, button):
         if button == 1 and self.light_switch_button.is_over(mouse_pos):
@@ -268,13 +296,18 @@ class LightSwitch01(InteractiveObject):
                 self.toggle_visibility()
             else:
                 self.toggle_visibility()
+        self.last_show_time = pygame.time.get_ticks()
 
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
-            # Ensure dialogue_index is within the correct range
-            if 0 <= self.dialogue_index < len(self.dialogue):
-                current_text = self.dialogue[self.dialogue_index]  # Access the current dialogue
-                self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
-                    text=current_text,
-                    color=self.PALE_GREEN,
-                    pos=(550, 319))
+            if pygame.time.get_ticks() - self.last_show_time > 3500:
+                self.is_visible = False
+                self.last_show_time = 0
+            else:
+                if self.is_visible and self.dialogue:
+                    if 0 <= self.dialogue_index < len(self.dialogue):
+                        current_text = self.dialogue[self.dialogue_index]
+                        self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
+                            text=current_text,
+                            color=self.PALE_GREEN,
+                            pos=(550, 319))

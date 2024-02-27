@@ -6,6 +6,7 @@ class MouseEventHandler:
         self.interactive_objects = interactive_objects
         # Dropdown menus which have specific visibility toggling and option selection
         self.dropdown_menus = dropdown_menus
+        self.last_click_time = 0
 
     def handle_click(self, mouse_pos, button):
         # Right-click: Toggle dropdown visibility

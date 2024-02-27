@@ -5,6 +5,7 @@ from button import Button, TransparentButton
 from game_objects import Book01, Door01, WindowDude01, LibraryBooks01, LightSwitch01
 from game_state_manager import GameStateManager
 from mouse_event import MouseEventHandler
+from exits_window import ExitsWindow
 
 game_state_manager = GameStateManager()
 dialogue = Dialogue()
@@ -14,21 +15,29 @@ SCREEN_WIDTH = 1024
 SCREEN_HEIGHT = 1024
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-pygame.mixer.music.load("Lofi Beat 3.wav")
+pygame.mixer.music.load("sounds/Lofi Beat 3.wav")
 pygame.mixer.music.set_volume(0.50)
 pygame.mixer.music.play(loops=-1)
 
-bg_all_closed = pygame.image.load("images/scene03.png")
-bg_book_open = pygame.image.load("images/scene03_book_open.png")
-bg_all_open = pygame.image.load("images/scene03_book_and_door_open.png")
+bg_all_closed = pygame.image.load("images/test_scene/scene03.png")
+bg_book_open = pygame.image.load("images/test_scene/scene03_book_open.png")
+bg_all_open = pygame.image.load("images/test_scene/scene03_book_and_door_open.png")
 
 # Define colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
+GREY = (32, 32, 32)
 
 # Instantiate game objects
+
+# Draw Exits Window
+# Exit window font
+exit_window_font_name = pygame.font.get_default_font()
+exit_window_font_size = 24
+exit_window_font = pygame.font.Font(exit_window_font_name, exit_window_font_size)
+exits_window = ExitsWindow(x=20, y=815, width=225, height=200, font=exit_window_font, game_state_manager=game_state_manager, bg_color=GREY)
 
 # Book
 book_button = TransparentButton(text=None,
@@ -172,6 +181,10 @@ while run:
         library_books.show_current_dialogue(screen)
     if light_switch.is_visible:
         light_switch.show_current_dialogue(screen)
+
+    # Exits Window
+    exits_window.update_exits()
+    exits_window.draw(screen)
 
     # Game Loop
     for event in pygame.event.get():

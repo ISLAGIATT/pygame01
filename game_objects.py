@@ -16,7 +16,6 @@ class InteractiveObject:
         self.dialogue_index = 0
         self.dialogue_instance = Dialogue()
         self.game_state_manager = game_state_manager
-        self.last_show_time = pygame.time.get_ticks()
 
     def toggle_visibility(self):
         self.is_visible = not self.is_visible
@@ -66,7 +65,7 @@ class Book01(InteractiveObject):
                         self.dialogue_index = 0  # Loop back to the start
                         self.toggle_visibility()
             else:
-                self.is_visible = not self.is_visible  # Just toggle visibility if the book isn't opened yet
+                self.toggle_visibility()
         print(f"key obtained: {self.game_state_manager.book01_key_obtained}")
         self.last_show_time = pygame.time.get_ticks()
 
@@ -84,26 +83,31 @@ class Book01(InteractiveObject):
 
     def open(self):
         self.is_visible = True
-        if self.game_state_manager.book01_key_obtained:
+        if self.game_state_manager.book01_key_obtained: #dialogue for the book being open
             self.dialogue = [self.open_dialogue[1]]
             self.dialogue_index = 0
+            self.last_show_time = pygame.time.get_ticks()
         else:
-            self.dialogue = [self.open_dialogue[0]]
+            self.dialogue = [self.open_dialogue[0]] #dialogue for the book being closed
             self.dialogue_index = 0
             self.game_state_manager.pick_up_key01()
             self.is_book_open = True
+            self.last_show_time = pygame.time.get_ticks()
 
     def touch(self):  # touch
+        self.last_show_time = pygame.time.get_ticks()
         self.is_visible = True
         self.dialogue = [self.touch_dialogue[0]]
         self.dialogue_index = 0
 
     def listen(self):
+        self.last_show_time = pygame.time.get_ticks()
         self.is_visible = True
         self.dialogue = [self.listen_dialogue[0]]
         self.dialogue_index = 0
 
     def consider(self):  # consider
+        self.last_show_time = pygame.time.get_ticks()
         self.is_visible = True
         self.dialogue = [self.consider_dialogue[0]]
         self.dialogue_index = 0
@@ -138,7 +142,7 @@ class Door01(InteractiveObject):
             if self.is_visible:
                 self.dialogue = self.exam_dialogue
                 if self.door_opened:
-                    if self.dialogue_index < len(self.exam_dialogue) - 2:
+                    if self.dialogue_index < len(self.exam_dialogue) - 2: # if door is open, then you can't push with your shoulder
                         self.advance_dialogue()
                         self.toggle_visibility()
                     else:
@@ -189,18 +193,23 @@ class Door01(InteractiveObject):
         self.is_visible = True
         self.dialogue = [self.touch_dialogue[0]]
         self.dialogue_index = 0
+        self.last_show_time = pygame.time.get_ticks()
 
     def listen(self):
         self.is_visible = True
         if self.game_state_manager.door01_unlocked:
             self.dialogue = [self.listen_dialogue[1]]
+            self.last_show_time = pygame.time.get_ticks()
         else:
             self.dialogue = [self.listen_dialogue[0]]
+            self.last_show_time = pygame.time.get_ticks()
+
 
     def consider(self):
         self.is_visible = True
         self.dialogue = [self.consider_dialogue[0]]
         self.dialogue_index = 0
+        self.last_show_time = pygame.time.get_ticks()
 
 
 class WindowDude01(InteractiveObject):
@@ -222,7 +231,6 @@ class WindowDude01(InteractiveObject):
             else:
                 self.toggle_visibility()
         self.last_show_time = pygame.time.get_ticks()
-
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
             if pygame.time.get_ticks() - self.last_show_time > 3500:
@@ -259,6 +267,7 @@ class LibraryBooks01(InteractiveObject):
             else:
                 self.toggle_visibility()
         self.last_show_time = pygame.time.get_ticks()
+
 
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:

@@ -37,7 +37,8 @@ GREY = (32, 32, 32)
 exit_window_font_name = pygame.font.get_default_font()
 exit_window_font_size = 24
 exit_window_font = pygame.font.Font(exit_window_font_name, exit_window_font_size)
-exits_window = ExitsWindow(x=20, y=815, width=225, height=200, font=exit_window_font, game_state_manager=game_state_manager, bg_color=GREY)
+exits_window = ExitsWindow(x=20, y=835, width=150, height=150, font=exit_window_font,
+                           game_state_manager=game_state_manager, bg_color=GREY)
 
 # Book
 book_button = TransparentButton(text=None,
@@ -148,9 +149,10 @@ mouse_event_handler = MouseEventHandler(
 run = True
 
 while run:
+    # Background changes with game state
     screen.fill((0, 0, 0))
     if game_state_manager.door01_unlocked:
-        screen.blit(bg_all_open, (0,0))
+        screen.blit(bg_all_open, (0, 0))
     elif game_state_manager.book01_key_obtained:
         screen.blit(bg_book_open, (0, 0))
     else:
@@ -193,9 +195,20 @@ while run:
             run = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_pos = pygame.mouse.get_pos()
-            print(f"Mouse pos: {mouse_pos}")
+            mouse_pos = event.pos
             button = event.button
-            mouse_event_handler.handle_click(mouse_pos, event.button)
+            print(f"Mouse pos: {mouse_pos}")
+            # Handle mouse down specifically for color toggle
+            exits_window.handle_mouse_down(mouse_pos, screen)
 
-    pygame.display.update()
+        elif event.type == pygame.MOUSEBUTTONUP:
+            mouse_pos = event.pos
+            # Handle mouse up for color toggle and double-click logic
+            exits_window.handle_mouse_up(mouse_pos, screen)
+
+        # Existing mouse click handling logic
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if not exits_window.handle_click(event.pos, event.button):
+                mouse_event_handler.handle_click(event.pos, event.button)
+
+    pygame.display.flip()

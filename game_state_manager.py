@@ -4,6 +4,7 @@ class GameStateManager:
         self.current_open_dropdown = None
         self.book01_key_obtained = False
         self.door01_unlocked = False
+        self.door01_open = True
 
         self.rooms = {
             'room1': {  # test room 1
@@ -57,6 +58,12 @@ class GameStateManager:
     def is_key01_obtained(self):
         return self.book01_key_obtained
 
+    def door01_open(self):
+        self.door01_open = True
+        print(f'door open: {self.door01_open} ')
+
     def door01_unlocked(self):
         self.door01_unlocked = True
         print('door unlocked')
+    def is_door01_open(self):
+        return self.door01_open

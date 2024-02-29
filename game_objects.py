@@ -158,7 +158,6 @@ class Door01(InteractiveObject):
             else:
                 self.toggle_visibility()
         self.last_show_time = pygame.time.get_ticks()
-        print(f"door open: {self.door_opened}\nkey obtained  {self.game_state_manager.book01_key_obtained}")
 
     def show_current_dialogue(self, screen):
         if self.is_visible and self.dialogue:
@@ -179,15 +178,19 @@ class Door01(InteractiveObject):
         if self.game_state_manager.book01_key_obtained and self.door_opened:
             self.dialogue = [self.open_dialogue[2]]
             self.dialogue_index = 0
+            self.last_show_time = pygame.time.get_ticks()
 
         elif self.game_state_manager.book01_key_obtained and not self.door_opened:
             self.game_state_manager.door01_unlocked = True
             self.dialogue = [self.open_dialogue[1]]
             self.dialogue_index = 0
-            self.door_opened = True
+            self.game_state_manager.door01_open = True
+            self.last_show_time = pygame.time.get_ticks()
+            print(f'door open {self.game_state_manager.door01_open}')
         else:
             self.dialogue = [self.open_dialogue[0]]
             self.dialogue_index = 0
+            self.last_show_time = pygame.time.get_ticks()
 
     def touch(self):
         self.is_visible = True

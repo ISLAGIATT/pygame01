@@ -5,7 +5,7 @@ from button import Button, TransparentButton
 from game_objects import Book01, Door01, WindowDude01, LibraryBooks01, LightSwitch01
 from game_state_manager import GameStateManager
 from mouse_event import MouseEventHandler
-from exits_window import ExitsWindow
+from exits_window import ExitsWindow, ClickableBox
 
 game_state_manager = GameStateManager()
 dialogue = Dialogue()
@@ -199,16 +199,15 @@ while run:
             button = event.button
             print(f"Mouse pos: {mouse_pos}")
             # Handle mouse down specifically for color toggle
-            exits_window.handle_mouse_down(mouse_pos, screen)
+            if not exits_window.handle_click(event.pos, event.button):
+                mouse_event_handler.handle_click(event.pos, event.button)
+            if exits_window.rect.collidepoint(mouse_pos):
+                exits_window.handle_mouse_down(mouse_pos, screen)
 
         elif event.type == pygame.MOUSEBUTTONUP:
             mouse_pos = event.pos
             # Handle mouse up for color toggle and double-click logic
             exits_window.handle_mouse_up(mouse_pos, screen)
 
-        # Existing mouse click handling logic
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if not exits_window.handle_click(event.pos, event.button):
-                mouse_event_handler.handle_click(event.pos, event.button)
 
-    pygame.display.flip()
+    pygame.display.update()

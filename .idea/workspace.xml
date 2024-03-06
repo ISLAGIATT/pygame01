@@ -7,6 +7,7 @@
     <list default="true" id="4da05e32-b437-4928-bdc9-392129184eb9" name="Changes" comment="2/29 trying to fix toggle box">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exits_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/exits_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_state_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_state_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_scene.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scene.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,23 +39,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.dialogue.executor": "Run",
-    "Python.dropdown.executor": "Run",
-    "Python.game_objects.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.scene01.executor": "Run",
-    "Python.scene02.executor": "Run",
-    "Python.scene03.executor": "Run",
-    "Python.test_scene.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/mattr/PycharmProjects/pythonProject/portfolio08_pygame/pygame_01"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.dialogue.executor&quot;: &quot;Run&quot;,
+    &quot;Python.dropdown.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game_objects.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scene01.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scene02.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scene03.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_scene.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mattr/PycharmProjects/pythonProject/portfolio08_pygame/pygame_01&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\mattr\PycharmProjects\pythonProject\portfolio08_pygame\pygame_01" />
@@ -253,7 +254,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709233242758</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="2/29 trying to fix toggle box">
+      <option name="closed" value="true" />
+      <created>1709677345220</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1709677345220</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

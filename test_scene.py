@@ -195,10 +195,10 @@ while run:
             run = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            # exits_window.on_click_box()
             mouse_pos = event.pos
             button = event.button
             print(f"Mouse pos: {mouse_pos}")
-            # Handle mouse down specifically for color toggle
             if not exits_window.handle_click(event.pos, event.button):
                 mouse_event_handler.handle_click(event.pos, event.button)
             if exits_window.rect.collidepoint(mouse_pos):
@@ -206,7 +206,6 @@ while run:
 
         elif event.type == pygame.MOUSEBUTTONUP:
             mouse_pos = event.pos
-            # Handle mouse up for color toggle and double-click logic
             exits_window.handle_mouse_up(mouse_pos, screen)
 
 

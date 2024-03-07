@@ -7,6 +7,7 @@ class InteractiveObject:
     TANGERINE = (255, 87, 51)
     MAGENTA = (204, 0, 204)
     PALE_GREEN = (218, 247, 166)
+    AQUAMARINE = (0, 255, 255)
 
     def __init__(self, dialogue, position, game_state_manager, size=(100, 30)):
         self.dialogue = dialogue
@@ -323,3 +324,38 @@ class LightSwitch01(InteractiveObject):
                             text=current_text,
                             color=self.PALE_GREEN,
                             pos=(550, 319))
+class Painting01(InteractiveObject):
+    painting01_dialogue = ["you should have paid more attention in history class",
+                           "... actually you could swear you've seen this man before",
+                           "he may be a stock photo model"]
+
+    def __init__(self, dialogue, position, painting01_button, game_state_manager):
+        super().__init__(dialogue, position, game_state_manager)
+        self.dialogue_instance = Dialogue()
+        self.painting01_button = painting01_button
+        self.current_dialogue_rect = None
+        self.last_show_time = 0
+
+    def handle_click(self, mouse_pos, button):
+        if button == 1 and self.painting01_button.is_over(mouse_pos):
+            if self.is_visible:
+                self.dialogue = self.painting01_dialogue
+                self.advance_dialogue()
+                self.toggle_visibility()
+            else:
+                self.toggle_visibility()
+        self.last_show_time = pygame.time.get_ticks()
+
+    def show_current_dialogue(self, screen):
+        if self.is_visible and self.dialogue:
+            if pygame.time.get_ticks() - self.last_show_time > 3500:
+                self.is_visible = False
+                self.last_show_time = 0
+            else:
+                if self.is_visible and self.dialogue:
+                    if 0 <= self.dialogue_index < len(self.dialogue):
+                        current_text = self.dialogue[self.dialogue_index]
+                        self.current_dialogue_rect = self.dialogue_instance.draw_dialogue(
+                            text=current_text,
+                            color=self.AQUAMARINE,
+                            pos=(207, 279))

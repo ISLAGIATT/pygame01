@@ -2,14 +2,14 @@ import pygame
 from dialogue import Dialogue
 from dropdown import DropdownMenu
 from button import Button, TransparentButton
-from game_objects import Book01, Door01, WindowDude01, LibraryBooks01, LightSwitch01
+from game_objects import Book01, Door01, WindowDude01, LibraryBooks01, LightSwitch01, Painting01
 from game_state_manager import GameStateManager
 from mouse_event import MouseEventHandler
 from exits_window import ExitsWindow, ClickableBox
 
+pygame.init()
 game_state_manager = GameStateManager()
 dialogue = Dialogue()
-pygame.init()
 
 SCREEN_WIDTH = 1024
 SCREEN_HEIGHT = 1024
@@ -33,7 +33,6 @@ GREY = (32, 32, 32)
 # Instantiate game objects
 
 # Draw Exits Window
-# Exit window font
 exit_window_font_name = pygame.font.get_default_font()
 exit_window_font_size = 24
 exit_window_font = pygame.font.Font(exit_window_font_name, exit_window_font_size)
@@ -121,6 +120,25 @@ library_books_button = TransparentButton(text=None,
                                          hover=(128, 128, 255, 0))
 library_books.library_books_button = library_books_button
 
+# Painting 1
+
+painting01 = Painting01(dialogue=Painting01.painting01_dialogue,
+                        position=(207, 279),
+                        painting01_button=None,
+                        game_state_manager=game_state_manager)
+painting01_button = TransparentButton(text=None,
+                                      width=75,
+                                      height=100,
+                                      pos=(235, 375),
+                                      elevation=0,
+                                      action=lambda: painting01.handle_click(mouse_pos, button),
+                                      image=None,
+                                      color=(128, 128, 255, 0),
+                                      shadow=(64, 64, 128, 0),
+                                      hover=(128, 128, 255, 0)
+                                      )
+painting01.painting01_button = painting01_button
+
 # Light Switch
 
 light_switch = LightSwitch01(dialogue=LightSwitch01.light_switch_dialogue,
@@ -141,8 +159,10 @@ light_switch.light_switch_button = light_switch_button
 
 # Mouse event handler
 mouse_event_handler = MouseEventHandler(
-    clickable_objects=[book_button, door_button, window_dude_button, library_books_button, light_switch_button],  # Add other clickable objects here
-    interactive_objects=[book01, door01, window_dude, library_books, light_switch],
+    clickable_objects=[book_button, door_button, window_dude_button, library_books_button, light_switch_button,
+                       painting01_button],
+    # Add other clickable objects here
+    interactive_objects=[book01, door01, window_dude, library_books, light_switch, painting01],
     dropdown_menus=[book_dropdown, door_dropdown]  # Add other dropdown menus here
 )
 
@@ -157,6 +177,7 @@ while run:
         screen.blit(bg_book_open, (0, 0))
     else:
         screen.blit(bg_all_closed, (0, 0))
+
     mouse_pos = pygame.mouse.get_pos()
 
     # book button
@@ -171,6 +192,8 @@ while run:
     library_books_button.draw(screen)
     # light switch
     light_switch_button.draw(screen)
+    # painting01
+    painting01_button.draw(screen)
 
     # dialogue enablers
     if book01.is_visible:
@@ -183,6 +206,8 @@ while run:
         library_books.show_current_dialogue(screen)
     if light_switch.is_visible:
         light_switch.show_current_dialogue(screen)
+    if painting01.is_visible:
+        painting01.show_current_dialogue(screen)
 
     # Exits Window
     exits_window.update_exits()
@@ -207,6 +232,5 @@ while run:
         elif event.type == pygame.MOUSEBUTTONUP:
             mouse_pos = event.pos
             exits_window.handle_mouse_up(mouse_pos, screen)
-
 
     pygame.display.update()
